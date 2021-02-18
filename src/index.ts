@@ -1,2 +1,4 @@
-export class Truc {
-}
+/**
+ * Starting point.
+ */
+export default {}
