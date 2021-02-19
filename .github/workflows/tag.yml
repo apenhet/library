@@ -2,7 +2,7 @@ name: Create Tag
 
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: ["Generate Docs"]
     types:
       - completed
 
