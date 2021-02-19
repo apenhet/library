@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  test:
+  docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,7 +19,7 @@ jobs:
 
       - name: Checkout gh-pages branch
         run: git switch -c gh-pages
-        
+
       - name: Install
         run: yarn install --frozen-lockfile
 
