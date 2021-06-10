@@ -8,14 +8,14 @@ import replace from '@rollup/plugin-replace'
 import typescript from '@rollup/plugin-typescript'
 
 const tsConfig = {
-  tsconfig: resolve('tsconfig.json')
+  tsconfig: resolve('tsconfig.json'),
 }
 
 const config = {
   input: 'src/index.ts',
   output: {
     dir: './',
-    sourcemap: true
+    sourcemap: true,
   },
   external: [],
   watch: {
@@ -23,9 +23,12 @@ const config = {
   },
   plugins: [
     commonjs(),
-    replace({'process.env.NODE_ENV': JSON.stringify('development')}),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      preventAssignment: true,
+    }),
     nodeResolve(),
-  ]
+  ],
 }
 
 const esConfig = merge({}, config, {
@@ -33,21 +36,23 @@ const esConfig = merge({}, config, {
     entryFileNames: module,
     format: 'es',
   },
-  plugins: [typescript(tsConfig)]
+  plugins: [typescript(tsConfig)],
 })
 
 const umdConfig = merge({}, config, {
   output: {
     entryFileNames: main,
     name: camelCase(name),
-    format: 'umd'
+    format: 'umd',
   },
-  plugins: [typescript({
-    ...tsConfig,
-    declaration: true,
-    declarationDir: dirname(typings),
-    rootDir: 'src/'
-  })]
+  plugins: [
+    typescript({
+      ...tsConfig,
+      declaration: true,
+      declarationDir: dirname(typings),
+      rootDir: 'src/',
+    }),
+  ],
 })
 
 export default [esConfig, umdConfig]
